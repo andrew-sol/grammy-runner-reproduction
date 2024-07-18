@@ -11,7 +11,7 @@ The bot runs in the `app.service.ts` file.
 ## Reproduction
 
 1. `yarn start` - this starts the bot: https://t.me/fvxI9Mps_bot
-2. Press `Cmd + C` or `Ctrl + C`
+2. Press `Ctrl + C`
 
 **Expected result**:
 You see two console messages:
