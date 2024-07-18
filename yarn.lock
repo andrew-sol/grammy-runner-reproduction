@@ -386,6 +386,13 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@grammyjs/auto-retry@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@grammyjs/auto-retry/-/auto-retry-2.0.1.tgz#876cfe18b3e9be399bca1157b97770ad30fc33a1"
+  integrity sha512-4W2T3KeRp1IERUUqMV6jjr+3z0FD6qe7DgXdykdqzNmOb2O+MUM7cqWCcWzbIjUVwRyFyHeH+vREO1ZvKppCrg==
+  dependencies:
+    debug "^4.3.4"
+
 "@grammyjs/runner@^2.0.3":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@grammyjs/runner/-/runner-2.0.3.tgz#cfb08958fd563ce1e0eda5754a40b3d632c4eaa1"

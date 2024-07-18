@@ -1,6 +1,7 @@
 import { Injectable, Logger, OnApplicationShutdown } from '@nestjs/common';
 import { Bot, Context, GrammyError, HttpError } from 'grammy';
 import { run, RunnerHandle, sequentialize } from '@grammyjs/runner';
+import { autoRetry } from '@grammyjs/auto-retry';
 
 @Injectable()
 export class AppService implements OnApplicationShutdown {
@@ -24,6 +25,8 @@ export class AppService implements OnApplicationShutdown {
   }
 
   async run(): Promise<void> {
+    this.bot.api.config.use(autoRetry());
+
     // ignore messages from public chats
     this.bot.use(async (ctx, next) => {
       if (ctx.chat.id > 0) {
@@ -71,7 +74,7 @@ export class AppService implements OnApplicationShutdown {
     if (this.runnerHandle) {
       this.logger.log(`Shutting down the bot...`);
 
-      await this.runnerHandle.task();
+      await this.runnerHandle.stop();
 
       this.logger.log(`The bot has been shut down.`);
     }
