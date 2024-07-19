@@ -29,16 +29,19 @@ export class AppService implements OnApplicationShutdown {
 
     this.runnerHandle = run(this.bot);
 
+    // bot commands
+    this.bot.command('start', async (ctx) => ctx.reply('Hello!'));
+
     this.logger.log(`Bot has been initialized.`);
   }
 
   async onApplicationShutdown(): Promise<void> {
     if (this.runnerHandle) {
-      this.logger.log(`Shutting down the bot...`);
+      this.logger.log(`Stopping the bot...`);
 
       await this.runnerHandle.stop();
 
-      this.logger.log(`The bot has been shut down.`);
+      this.logger.log(`Stopped.`);
     }
   }
 }
