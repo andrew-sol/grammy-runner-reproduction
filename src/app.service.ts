@@ -1,6 +1,6 @@
 import { Injectable, Logger, OnApplicationShutdown } from '@nestjs/common';
-import { Bot, Context, GrammyError, HttpError } from 'grammy';
-import { run, RunnerHandle, sequentialize } from '@grammyjs/runner';
+import { Bot } from 'grammy';
+import { run, RunnerHandle } from '@grammyjs/runner';
 import { autoRetry } from '@grammyjs/auto-retry';
 
 @Injectable()
@@ -26,44 +26,6 @@ export class AppService implements OnApplicationShutdown {
 
   async run(): Promise<void> {
     this.bot.api.config.use(autoRetry());
-
-    // ignore messages from public chats
-    this.bot.use(async (ctx, next) => {
-      if (ctx.chat.id > 0) {
-        await next();
-      }
-    });
-
-    this.bot.use(
-      sequentialize((ctx) => {
-        const chat = ctx.chat?.id.toString();
-        const user = ctx.from?.id.toString();
-
-        return [chat, user].filter((con) => con !== undefined);
-      }),
-    );
-
-    // bot commands
-    this.bot.command('start', async (ctx) => ctx.reply('Hello!'));
-
-    // catch errors
-    this.bot.catch((err) => {
-      const ctx = err.ctx;
-
-      this.logger.error(
-        `Error while handling bot update ${ctx.update.update_id}:`,
-      );
-
-      const e = err.error;
-
-      if (e instanceof GrammyError) {
-        this.logger.error('Error in request:', e.description);
-      } else if (e instanceof HttpError) {
-        this.logger.error('Could not contact Telegram:', e);
-      } else {
-        this.logger.error('Unknown error:', e);
-      }
-    });
 
     this.runnerHandle = run(this.bot);
 
