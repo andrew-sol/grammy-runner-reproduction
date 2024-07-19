@@ -20,6 +20,9 @@ async function main() {
 
   bot.api.config.use(autoRetry());
 
+  // bot commands
+  bot.command('start', async (ctx) => ctx.reply('Hello!'));
+
   runnerHandle = run(bot);
 
   console.log(`Bot started.`);
